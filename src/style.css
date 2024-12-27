@@ -610,6 +610,7 @@ lottie-player {
   font-weight: 500;
   color: #7400E8;
   margin-bottom: 2rem;
+  cursor: pointer;
 }
 
 .name-input-container {
@@ -630,6 +631,7 @@ lottie-player {
   max-width: 300px;
   text-align: center;
   box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  cursor: pointer;
 }
 
 .name-input:focus {
@@ -672,8 +674,8 @@ lottie-player {
 }
 
 .start-btn .continue-arrow {
-  width: 24px;
-  height: 24px;
+  width: 24px !important;
+  height: 24px !important;
 }
 
 .continue-btn .continue-arrow,
@@ -762,6 +764,7 @@ lottie-player {
   padding: 0.5rem;
   border-radius: 4px;
   background: white;
+  cursor: pointer;
 }
 
 .leaderboard-item.current-user {
