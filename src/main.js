@@ -400,7 +400,7 @@ class QuizApp {
         <div class="splash-content">
           <div class="splash-animation">
             <lottie-player
-              src="/public/lottie/intro.json"
+              src="/lottie/intro.json"
               background="transparent"
               speed="1"
               style="width: 300px; height: 300px;"
@@ -752,7 +752,7 @@ class QuizApp {
               <div class="results-content">
                 <div class="lottie-container">
                   <lottie-player
-                    src="${scoreResult.animation}"
+                    src="/lottie${scoreResult.animation}"
                     background="transparent"
                     speed="1"
                     style="width: 200px; height: 200px;"
