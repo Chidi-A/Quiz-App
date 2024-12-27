@@ -373,8 +373,6 @@ class QuizApp {
   }
 
   renderPage(page) {
-    console.log(`Rendering page: ${page}, Category: ${this.selectedCategory}`);
-    
     switch(page) {
       case 'splash':
         this.renderSplashScreen();
@@ -527,8 +525,6 @@ class QuizApp {
   }
 
   renderInstructionsPage() {
-    console.log('Rendering instructions with category:', this.selectedCategory);
-    
     const categoryColors = {
       design: '#FACB08',
       brand: '#91A6F2',
@@ -569,7 +565,6 @@ class QuizApp {
     });
 
     document.querySelector('.continue-btn').addEventListener('click', () => {
-      console.log('Starting quiz with category:', this.selectedCategory);
       this.currentPage = 'quiz';
       this.renderPage('quiz');
     });
@@ -577,7 +572,6 @@ class QuizApp {
 
   renderQuizPage() {
     if (!this.selectedCategory) {
-      console.error('No category selected');
       return;
     }
 
@@ -690,8 +684,6 @@ class QuizApp {
   }
 
   async renderResultsPage() {
-    console.log('Rendering results page...');
-    
     // Show loading state first
     const loadingScreen = `
       <div class="quiz-page" style="background-color: ${this.categoryColors[this.selectedCategory]}">
@@ -719,7 +711,6 @@ class QuizApp {
     
     try {
         const savedResult = await this.saveQuizResult();
-        console.log('Save result response:', savedResult);
         
         const scoreResult = this.getScoreMessage();
         const shareText = `I scored ${this.score}/10 as a ${scoreResult.title} in the ${this.selectedCategory} quiz! Think you can beat my score?`;
@@ -738,7 +729,6 @@ class QuizApp {
                 });
                 return canvas.toDataURL('image/png');
             } catch (err) {
-                console.error('Error generating image:', err);
                 return null;
             }
         };
@@ -752,12 +742,13 @@ class QuizApp {
               <div class="results-content">
                 <div class="lottie-container">
                   <lottie-player
-                    src="/lottie${scoreResult.animation}"
+                    src="${scoreResult.animation}"
                     background="transparent"
                     speed="1"
                     style="width: 200px; height: 200px;"
                     loop
                     autoplay
+                    renderer="svg"
                   ></lottie-player>
                 </div>
                 <h2 class="final-score">Your Score: ${this.score}/10</h2>
@@ -839,7 +830,6 @@ class QuizApp {
                 copyBtn.classList.add('copied');
                 setTimeout(() => copyBtn.classList.remove('copied'), 2000);
             } catch (err) {
-                console.error('Failed to copy text: ', err);
             }
         });
 
@@ -851,7 +841,10 @@ class QuizApp {
             this.renderPage('landing');
         });
     } catch (error) {
-        console.error('Error in renderResultsPage:', error);
+        // Use the utility function for logging
+        if (process.env.NODE_ENV !== 'production') {
+            console.error('Error in renderResultsPage:', error);
+        }
     }
   }
 
