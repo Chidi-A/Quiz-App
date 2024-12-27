@@ -9,6 +9,7 @@ import {
   orderBy, 
   limit 
 } from "firebase/firestore";
+import { log } from './utils.js';
 
 class QuizApp {
   constructor() {
@@ -544,7 +545,7 @@ class QuizApp {
             <ul>
               <li>Please do not refresh the page or close the tab</li>
               <li>You will have 10 questions to answer</li>
-              <li>Each question has a 10-second time limit</li>
+              <li>Each question has a 15-second time limit</li>
               <li>You cannot change your answer once selected</li>
             </ul>
           </div>
@@ -740,17 +741,7 @@ class QuizApp {
             </div>
             <div class="landing-page-content">
               <div class="results-content">
-                <div class="lottie-container">
-                  <lottie-player
-                    src="${scoreResult.animation}"
-                    background="transparent"
-                    speed="1"
-                    style="width: 200px; height: 200px;"
-                    loop
-                    autoplay
-                    renderer="svg"
-                  ></lottie-player>
-                </div>
+                <div id="result-animation" class="lottie-container"></div>
                 <h2 class="final-score">Your Score: ${this.score}/10</h2>
                 <h3 class="score-title">${scoreResult.title}</h3>
                 <div class="score-message">
@@ -778,6 +769,15 @@ class QuizApp {
         `;
 
         this.appContainer.innerHTML = quiz;
+
+        // Initialize the animation after setting innerHTML
+        lottie.loadAnimation({
+            container: document.getElementById('result-animation'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: scoreResult.animation
+        });
 
         // Modified share buttons event listeners
         document.querySelector('.share-btn.twitter').addEventListener('click', async () => {
@@ -856,25 +856,25 @@ class QuizApp {
                 range: [10],
                 title: "Design Maestro!",
                 message: "You're the Da Vinci of design!",
-                animation: "https://lottie.host/embed/cd2a40d4-344e-437d-acae-5542a1090044/109LMqi4n4.lottie"
+                animation: "/lottie/trophy.json"
             },
             {
                 range: [8, 9],
                 title: "Creative Guru!",
                 message: "Your skills are sharp and your vision, sharper.",
-                animation: "https://lottie.host/embed/9a7f307f-1549-439d-afca-94671616f208/NqKcuoMY2l.lottie"
+                animation: "/lottie/eyestar.json"
             },
             {
                 range: [5, 6, 7],
                 title: "Emerging Designer!",
                 message: "You've got the eye; now sharpen the craft.",
-                animation: "https://lottie.host/embed/9bce5bc5-3724-4b87-b452-b77049867226/EaxR8oxDpL.lottie"
+                animation: "/lottie/thumbsup.json"
             },
             {
                 range: [0, 1, 2, 3, 4],
                 title: "Design Dreamer!",
                 message: "Every master starts with a sketch. Keep growing!",
-                animation: "https://lottie.host/embed/a04fe373-22e1-4236-af3c-d22130b37191/7sQwaKUeob.lottie"
+                animation: "/lottie/computer.json"
             }
         ],
         development: [
@@ -882,25 +882,25 @@ class QuizApp {
                 range: [10],
                 title: "Code Wizard!",
                 message: "You weave code like magic—absolute perfection!",
-                animation: "https://lottie.host/embed/cd2a40d4-344e-437d-acae-5542a1090044/109LMqi4n4.lottie"
+                animation: "/lottie/trophy.json"
             },
             {
                 range: [8, 9],
                 title: "Dev Prodigy!",
                 message: "Logic and creativity combined; you're almost there.",
-                animation: "https://lottie.host/embed/a04fe373-22e1-4236-af3c-d22130b37191/7sQwaKUeob.lottie"
+                animation: "/lottie/computer.json"
             },
             {
                 range: [5, 6, 7],
                 title: "Rising Developer!",
                 message: "Your foundation is solid—time to debug those skills.",
-                animation: "https://lottie.host/embed/9bce5bc5-3724-4b87-b452-b77049867226/EaxR8oxDpL.lottie"
+                animation: "/lottie/thumbsup.json"
             },
             {
                 range: [0, 1, 2, 3, 4],
                 title: "Code Learner!",
                 message: "Every developer starts with Hello, World!—keep at it.",
-                animation: "https://lottie.host/embed/a04fe373-22e1-4236-af3c-d22130b37191/7sQwaKUeob.lottie"
+                animation: "/lottie/computer.json"
             }
         ],
         marketing: [
@@ -908,25 +908,25 @@ class QuizApp {
                 range: [10],
                 title: "Marketing Maven!",
                 message: "You're a marketing mastermind—pure brilliance!",
-                animation: "https://lottie.host/embed/cd2a40d4-344e-437d-acae-5542a1090044/109LMqi4n4.lottie"
+                animation: "/lottie/trophy.json"
             },
             {
                 range: [8, 9],
                 title: "Strategy Star!",
                 message: "Your marketing instincts are razor-sharp!",
-                animation: "https://lottie.host/embed/9a7f307f-1549-439d-afca-94671616f208/NqKcuoMY2l.lottie"
+                animation: "/lottie/eyestar.json"
             },
             {
                 range: [5, 6, 7],
                 title: "Growth Explorer!",
                 message: "You're on the right path to marketing excellence!",
-                animation: "https://lottie.host/embed/9bce5bc5-3724-4b87-b452-b77049867226/EaxR8oxDpL.lottie"
+                animation: "/lottie/thumbsup.json"
             },
             {
                 range: [0, 1, 2, 3, 4],
                 title: "Marketing Enthusiast!",
                 message: "Every campaign starts with one idea—keep learning!",
-                animation: "https://lottie.host/embed/a04fe373-22e1-4236-af3c-d22130b37191/7sQwaKUeob.lottie"
+                animation: "/lottie/computer.json"
             }
         ],
         brand: [
@@ -934,25 +934,25 @@ class QuizApp {
                 range: [10],
                 title: "Brand Virtuoso!",
                 message: "You're a branding genius—simply outstanding!",
-                animation: "https://lottie.host/embed/cd2a40d4-344e-437d-acae-5542a1090044/109LMqi4n4.lottie"
+                animation: "/lottie/trophy.json"
             },
             {
                 range: [8, 9],
                 title: "Brand Architect!",
                 message: "You build brand stories that resonate and inspire!",
-                animation: "https://lottie.host/embed/9a7f307f-1549-439d-afca-94671616f208/NqKcuoMY2l.lottie"
+                animation: "/lottie/eyestar.json"
             },
             {
                 range: [5, 6, 7],
                 title: "Brand Builder!",
                 message: "You're crafting your way to brand mastery!",
-                animation: "https://lottie.host/embed/9bce5bc5-3724-4b87-b452-b77049867226/EaxR8oxDpL.lottie"
+                animation: "/lottie/thumbsup.json"
             },
             {
                 range: [0, 1, 2, 3, 4],
                 title: "Brand Explorer!",
                 message: "Every brand has a story—yours is just beginning!",
-                animation: "https://lottie.host/embed/a04fe373-22e1-4236-af3c-d22130b37191/7sQwaKUeob.lottie"
+                animation: "/lottie/computer.json"
             }
         ],
         strategy: [
@@ -960,25 +960,25 @@ class QuizApp {
                 range: [10],
                 title: "Strategy Sage!",
                 message: "Your strategic thinking is in a league of its own!",
-                animation: "https://lottie.host/embed/cd2a40d4-344e-437d-acae-5542a1090044/109LMqi4n4.lottie"
+                animation: "/lottie/trophy.json"
             },
             {
                 range: [8, 9],
                 title: "Strategic Visionary!",
                 message: "You see the big picture with remarkable clarity!",
-                animation: "https://lottie.host/embed/9a7f307f-1549-439d-afca-94671616f208/NqKcuoMY2l.lottie"
+                animation: "/lottie/eyestar.json"
             },
             {
                 range: [5, 6, 7],
                 title: "Strategy Tactician!",
                 message: "You're developing a keen strategic mind!",
-                animation: "https://lottie.host/embed/9bce5bc5-3724-4b87-b452-b77049867226/EaxR8oxDpL.lottie"
+                animation: "/lottie/thumbsup.json"
             },
             {
                 range: [0, 1, 2, 3, 4],
                 title: "Strategy Apprentice!",
                 message: "Every strategist starts somewhere—keep planning!",
-                animation: "https://lottie.host/embed/a04fe373-22e1-4236-af3c-d22130b37191/7sQwaKUeob.lottie"
+                animation: "/lottie/computer.json"
             }
         ]
     };
